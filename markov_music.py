@@ -149,8 +149,8 @@ def generate_random_music_by_notes(starting_notes: List[Note], length_of_history
     yield from generate_random_stream(starting_notes, length_of_history, mixup_period)
 
 
-def generate_random_music_by_pitch_and_duration(starting_notes: List[Note], length_of_history: int = 1,
-                                                mixup_period: int = None) -> NoteGen:
+def generate_random_music_independent_duration(starting_notes: List[Note], length_of_history: int = 1,
+                                               mixup_period: int = None) -> NoteGen:
     """ Generates pitches and durations independently and then combines them into a series of notes
 
     :param starting_notes: the notes to base the generator off of
@@ -163,8 +163,8 @@ def generate_random_music_by_pitch_and_duration(starting_notes: List[Note], leng
     yield from (Note(p, duration=d) for (p, d) in zip(pitches, durations))
 
 
-def generate_random_music_by_pitch(starting_notes: List[Note], length_of_history: int = 1,
-                                   mixup_period: int = None) -> NoteGen:
+def generate_random_music_dependent_duration(starting_notes: List[Note], length_of_history: int = 1,
+                                             mixup_period: int = None) -> NoteGen:
     """ Generates pitches and then bases durations off of those notes
 
     :param starting_notes: the notes to base the generator off of
@@ -216,9 +216,9 @@ if __name__ == '__main__':
     if strategy == 'a' or strategy == 'note':
         strategy = generate_random_music_by_notes
     elif strategy == 'b' or strategy == 'dependent':
-        strategy = generate_random_music_by_pitch_and_duration
+        strategy = generate_random_music_dependent_duration
     elif strategy == 'c' or strategy == 'independent':
-        strategy = generate_random_music_by_pitch
+        strategy = generate_random_music_independent_duration
 
     result = make_text(read_note_sequence(file_in), strategy, length, history_length, mixup_period)
     with open(file_out, mode='w') as f:
