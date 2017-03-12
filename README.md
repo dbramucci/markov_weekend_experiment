@@ -1,2 +1,2 @@
-# markov_weekend_experiment
+# My Markov Chain Experiment
 I played with markov chains this weekend.
